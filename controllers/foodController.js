@@ -1,7 +1,9 @@
 //creat food
 
 const authMiddleware = require("../middleware/authMiddleware");
-const foodModel = require("../models/foodModel")
+const foodModel = require("../models/foodModel");
+const orderModel = require("../models/orderModel");
+
 
 
 const createFoodController = async (req, res) => {
@@ -119,6 +121,41 @@ const updFoodController = async (req, res) => {
 
 }
 
+//place order
+const placeOrderController = async (req, res) => {
+    try {
+        const { cart, payment } = req.body
+        if (!cart || !payment) {
+            return res.status(500).sen({
+                success: false,
+                message: 'please add cart or payment'
+            })
+        }
+        const total = 0
+        //calculate
+        cart.map((i) => {
+            total += i.price
+        })
+        const newOrder = await new orderModel({
+            foods: cart,
+            payment,
+            buyer: req.body.id
+        })
+        res.sttaus(201).send({
+            suucess: true,
+            message: 'order placed successfully', newOrder
+        })
+    } catch (error) {
+        console.log(error)
+        res.status(500).send({
+            success: false,
+            message: 'order is not placed', error
+        })
+
+    }
+
+}
 
 
-module.exports = { createFoodController, getFoodController, getSingleFoodController, updFoodController }
+
+module.exports = { createFoodController, getFoodController, getSingleFoodController, updFoodController, placeOrderController }
