@@ -4,7 +4,7 @@ const morgan = require('morgan');
 require('dotenv').config();
 const db = require('./config/db');
 const authMiddleware = require('./middleware/authMiddleware');
-
+const joi = require('joi');
 
 
 // dotenv configuration

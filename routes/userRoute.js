@@ -5,6 +5,9 @@ const authMiddleware = require('../middleware/authMiddleware');
 const router = express.Router();
 
 
+
+
+
 //routes
 //GET USER
 
